@@ -1,0 +1,12 @@
+# Use root/example as user/password credentials
+version: "3.3"
+services:
+
+  db:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_DB=symfony
+      - POSTGRES_USER=api-platform
+      - POSTGRES_PASSWORD=lmdpe
+    ports:
+      - "5432:5432"
