@@ -1,7 +1,11 @@
-{% extends "base.html.twig" %}
-
-{% block title %}Administration{% endblock %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    Administration
+    <p>Je suis dans la home</p>
+    <div class="row">
+        {% if app.user %}
+            <p>Bienvenue {{ app.user.username}}</p>
+            <a href="{{ path('app_front_security_logout') }}">Se deconnecter</a>
+        {% endif %}
+    </div>
 {% endblock %}
