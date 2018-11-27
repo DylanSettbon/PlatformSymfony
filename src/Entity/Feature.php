@@ -43,10 +43,16 @@ class Feature
      */
     private $notes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Comment", mappedBy="feature")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->advancements = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +153,34 @@ class Feature
             if ($note->getFeature() === $this) {
                 $note->setFeature(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->addFeature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            $comment->removeFeature($this);
         }
 
         return $this;
