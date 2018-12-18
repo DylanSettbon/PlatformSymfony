@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment
 {
+   //use TimestampableTrait;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -31,11 +33,11 @@ class Comment
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Feature", inversedBy="comments")
      */
-    private $feature;
+    private $features;
 
     public function __construct()
     {
-        $this->feature = new ArrayCollection();
+        $this->features = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,15 +72,15 @@ class Comment
     /**
      * @return Collection|Feature[]
      */
-    public function getFeature(): Collection
+    public function getFeatures(): Collection
     {
-        return $this->feature;
+        return $this->features;
     }
 
     public function addFeature(Feature $feature): self
     {
-        if (!$this->feature->contains($feature)) {
-            $this->feature[] = $feature;
+        if (!$this->features->contains($feature)) {
+            $this->features[] = $feature;
         }
 
         return $this;
@@ -86,8 +88,8 @@ class Comment
 
     public function removeFeature(Feature $feature): self
     {
-        if ($this->feature->contains($feature)) {
-            $this->feature->removeElement($feature);
+        if ($this->features->contains($feature)) {
+            $this->features->removeElement($feature);
         }
 
         return $this;
